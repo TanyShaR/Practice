@@ -1,36 +1,41 @@
-import { useState } from 'react'
+import { NavLink, Route, Routes } from "react-router"
+import Home from "./pages/Home/Home";
+import Blog from "./pages/Blog/Blog";
+import BlogDetails from "./pages/BlogDetails/BlogDetails";
+import Contact from "./pages/Contact/Contact";
+import About from "./pages/About/About";
+import Users from "./pages/Users/Users";
+import UserDetails from "./pages/UserDetails/UserDetails";
+
+const setActiveLink = ({isActive}) => isActive ? "navbar__item navbar__item-active" : "navbar__item";
 
 const App = () => {
-    const [count, setCount] = useState(0); // [0, f]
+  return (
+    <>
+        <nav className="navbar">
+          <ul className="navbar-list">
+            <li><NavLink to="/" className={setActiveLink}>Home</NavLink></li>
+            <li><NavLink to="/blog" className={setActiveLink}>Blog</NavLink></li>
+            <li><NavLink to="/contact" className={setActiveLink}>Contact</NavLink></li>
+            <li><NavLink to="/about" className={setActiveLink}>About</NavLink></li>
+            <li><NavLink to="/users" className={setActiveLink}>Users</NavLink></li>
+          </ul>
+        </nav>
 
-    const incrementBy1 = () => {
-        setCount(prevState => prevState + 1)
-    }
-
-    const incrementBy5 = () => {
-        setCount(prevState => prevState + 5)
-    }
-
-    const reset = () => {
-        setCount(0)
-    }
-
-    const increment = (count) =>{
-        setCount(prevState => prevState + count)
-    }
-
-    return (
-        <div>
-            <div>
-                <button onClick={incrementBy1}>Увеличить на 1</button>
-                <button onClick={incrementBy5}>Увеличить на 5</button>
-                <button onClick={() => increment(4)}>Увеличить</button>
-                <button onClick={reset}>Сбросить</button>
-            </div>
-
-            <h2>{count}</h2>
-        </div>
-    )
+        <main>
+           <Routes>
+              <Route path="/" element={<Home />}/>
+              <Route path="/blog" element={<Blog />}/>
+              <Route path="/blog/:id" element={<BlogDetails />}/>
+              <Route path="/contact" element={<Contact />}/>
+              <Route path="/about" element={<About />}/>
+              <Route path="/users" element={<Users />}/>
+              <Route path="/users/:userId" element={<UserDetails />}/>
+              <Route path="*" element={<h1> Not Found </h1>}/>
+           </Routes>
+        </main>
+    </>
+  )
 }
 
 export default App
